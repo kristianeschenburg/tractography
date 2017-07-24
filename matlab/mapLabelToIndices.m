@@ -1,5 +1,9 @@
 % Generates the dictionary mapping labels to vertex indices
-% 
+% Takes .h5 output of parcellearning/tractographyProcessing.py
+% and converts it to a matlab cell structure.
+
+% We preferentially use Matlab here for the tractography processing
+% due to difficulty in loading the fdt_matrix$.dot files in Python.
 function [dict] = mapLabelToIndices(hemisphereCoords)
 
 rois = h5readatt(hemisphereCoords,'/','regions');
