@@ -47,6 +47,7 @@ assert os.path.exists(depthFile)
 assert os.path.exists(fdtFile)
 assert os.path.exists(surfAdjFile)
 
+print 'Loading fdt matrix.'
 depth = ld.loadGii(depthFile,darray=np.arange(1))
 fdt = sm.loadFDT(fdtFile)
 
@@ -54,8 +55,10 @@ with open(surfAdjFile,'r') as inS:
     J = json.load(inS)
 J = {int(k): J[k] for k in J.keys()}
 
+print 'Computing all pairs shortest path with cutoff of {}'.format(dist)
 G = nx.from_dict_of_lists(J)
 apsp = nx.all_pairs_shortest_path_length(G,cutoff=dist)
 
+print 'Computing smoothed, sparse matrix.'
 sparseMatrix = sm.smoothFeatures(fdt,apsp,depth,kw)
 scipy.sparse.save_npz(output,sparseMatrix)
