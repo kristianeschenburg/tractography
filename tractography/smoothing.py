@@ -47,7 +47,7 @@ def smoothFeatures(fdt,adjacency,depth,kernelWeight):
     
     for i in inputs:
         
-        if i % 10000 == 0:
+        if i % 50000 == 0:
             print i
         
         s = source[i]-1
