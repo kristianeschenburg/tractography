@@ -1,6 +1,5 @@
-function convertToFull(dotMatrix,outMatrix)
+function [counts] = convertToFull(dotMatrix)
 
-	temp = load(dotMatrix)
-	counts = spconvert(temp)
-
-	save(outMatrix,'counts','-v7.3')
+	temp = load(dotMatrix);
+	counts = spconvert(temp);
+	counts = squareform(counts);

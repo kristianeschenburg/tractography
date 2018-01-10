@@ -1,3 +1,5 @@
+addpath('/mnt/parcellator/parcellation/Matlab/SpectralMatching/Requirements/');
+
 homeDirectory = char('/mnt/parcellator/parcellation/HCP/Connectome_4/')
 subjectList = sprintf('%sSubjectList.txt',homeDirectory);
 
@@ -30,9 +32,13 @@ for s = 1:length(subjects)
 
 			tempDot = sprintf('%sfdt_matrix%i.dot',hemisphereDirectory,l);
 			outDot = sprintf('%sfdt_matrix%i.mat',hemisphereDirectory,l);
-			X = load(tempDot);
-			counts = spconvert(X);
-			save(outDot,'counts','-v7.3');
+
+			if ~exist(outDot,'file')
+				if exist(tempDot,'file')
+					counts = countsToFull(tempDot);
+					save(outDot,'counts','-v7.3');
+				end
+			end
 		end
 	end
 end
