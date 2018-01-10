@@ -15,7 +15,7 @@ import networkx as nx
 import numpy as np
 import scipy
 
-import tractography.smoothing as sm
+import tractography.tractography.smoothing as sm
 import loaded as ld
 
 parser = argparse.ArgumentParser()
