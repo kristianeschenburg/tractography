@@ -7,8 +7,8 @@ Created on Tue Jan  9 22:11:28 2018
 """
 
 import argparse,os,sys
-sys.path.append('..')
 sys.path.insert(0,'../../io/')
+sys.path.insert(1,'../tractography/')
 
 import json
 import networkx as nx
