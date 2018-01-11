@@ -26,7 +26,7 @@ def smoothFeatures(fdt,adjacency,depth,kernelWeight):
     Parameters:
     - - - - -        
         fdt : raw connectivity matrix
-        adjacency : adjacency graph
+        adjacency : surface distance dictionary
         depth : sulcal depth map (scaled and shifted, so that deepest
                 sulcus has a depth of 0)
         kernelSize : neighborhood size
@@ -45,10 +45,11 @@ def smoothFeatures(fdt,adjacency,depth,kernelWeight):
     
     print len(inputs)
     
+    c = 0
     for i in inputs:
         
-        if i % 50000 == 0:
-            print i
+        if c % 100000 == 0:
+            print c
         
         s = source[i]-1
         t = target[i]-1
@@ -62,7 +63,12 @@ def smoothFeatures(fdt,adjacency,depth,kernelWeight):
         
         results = smoothIndex(s,t,c,neighbs,dp,kernelWeight)
         
-        updates[s,results.keys()] += results.values()
+        try:
+            updates[s,results.keys()] += results.values()
+        except:
+            pass
+        
+        c+=1
     
     """
     results = Parallel(n_jobs=NUM_CORES)(delayed(smoothIndex)(source[i],
