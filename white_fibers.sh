@@ -15,7 +15,11 @@ ${PTX3} -s ${hcp_dir}/${subject}/Diffusion.bedpostX/merged \
         --dir=${data_dir}/WhiteFibers/${subject}.L.W2W.Len.StopWhite.Source.${lenthresh} --forcedir \
         --seedref=${data_dir}/Structural/${subject}.T1w_acpc_dc_restore.nii.gz \
         --omatrix3 \
+<<<<<<< HEAD
         --target3=${data_dir}/Surfaces/${subject}.L.white.32k_fs_LR.acpc_dc.surf.gii \
+=======
+        --target3=${data_dir}/Surfaces/${subject}.L.white.32k_fs_LR.acpc_dc.surf.gii  \
+>>>>>>> 525c1a1f9b5787e552c3fcf51168f09119121eda
         --lrtarget3=${data_dir}/Surfaces/${subject}.L.white.32k_fs_LR.acpc_dc.surf.gii \
         -V 1 -P ${samples} --opd --ompl --onewayonly --flipsign \
 	--forcefirststep
