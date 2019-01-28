@@ -1,14 +1,20 @@
+"""
+Script to save single-vertex source streamline projection patterns as
+gifti metric maps.  Takes in a source vertex, and (possible) a target
+vertex, and saves the projection patterns for every point in the shortest
+path between the two vertices.
+"""
+
+
 import numpy as np
 from niio import write, loaded
 import nibabel as nb
-
 from surface_utilities import adjacency as adj
 
 import pandas as pd
 from scipy.sparse import csr_matrix
 
 import networkx as nx
-
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -18,7 +24,7 @@ parser.add_argument('-s', '--surf', help='Surface file.', required=True,
 parser.add_argument('-iv', '--init_vertex', help='Start vertex of path.',
     required=True, type=int)
 parser.add_argument('-tv', '--target_vertex', help='Target vertex of path.',
-    required=True, type=int)
+    required=False, type=int, default=None)
 parser.add_argument('-f', '--features', help='.dot file from Probtrackx.',
     required=True, type=str)
 parser.add_argument('-o', '--outbase', help='Output base name.',
@@ -36,8 +42,11 @@ print('Generating adjacency matrix and shortest path...')
 S = adj.SurfaceAdjacency(vertices = vertices, faces = triangles)
 S.generate()
 
-graph = nx.from_dict_of_list(S.adj)
-path = nx.shortest_path(G=graph, source=args.init_vertex, target=args.target_vertex)
+if args.target_vertex:
+    graph = nx.from_dict_of_list(S.adj)
+    path = nx.shortest_path(G=graph, source=args.init_vertex, target=args.target_vertex)
+else:
+    path = [args.init_vertex]
 
 print('Loading features...')
 dot = pd.read_table(args.features, sep='\s+', names=['source', 'target', 'count'])
